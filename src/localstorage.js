@@ -1,4 +1,6 @@
-import chain from 'lodash/chain';
+import flow from 'lodash/fp/flow';
+import map from 'lodash/fp/map';
+import filter from 'lodash/fp/filter';
 import includes from 'lodash/includes';
 import isObject from 'lodash/isObject';
 import without from 'lodash/without';
@@ -105,10 +107,10 @@ export class LocalStorage {
    * @returns {Array} The array of models stored
    */
   findAll() {
-    return chain(this.records).map(
-      id => this.serializer.deserialize(this._getItem(this._itemName(id)))
-    ).filter(
-      item => item != null).value();
+    return flow(
+      map(id => this.serializer.deserialize(this._getItem(this._itemName(id)))),
+      filter(item => item != null)
+    )(this.records);
   }
 
   /** Delete a model from `this.data`, returning it.
