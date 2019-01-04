@@ -1,4 +1,7 @@
-import { chain, contains, isObject, without } from 'underscore';
+import chain from 'lodash/chain';
+import includes from 'lodash/includes';
+import isObject from 'lodash/isObject';
+import without from 'lodash/without';
 
 import { getWindow, guid } from './utils';
 
@@ -83,7 +86,7 @@ export class LocalStorage {
 
     const modelId = model.id.toString();
 
-    if (!contains(this.records, modelId)) {
+    if (!includes(this.records, modelId)) {
       this.records.push(modelId);
       this.save();
     }
